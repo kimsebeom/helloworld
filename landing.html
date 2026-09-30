@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>혜택온 | Premium Convenience Subscription</title>
+    <!-- Plotly CDN -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* 
+           Color System:
+           Wine: #6B1111
+           Amber: #FFBF00
+           Soft Cream: #FFFBF2
+        */
+        :root {
+            --wine: #6B1111;
+            --wine-light: #8B1E1E;
+            --amber: #FFBF00;
+            --bg-soft: #FFFBF2;
+            --text-dark: #2D3436;
+            --text-gray: #636E72;
+            --white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-soft);
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(107, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .navbar a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: 0.3s;
+        }
+        .navbar a:hover { opacity: 1; color: var(--amber); }
+
+        /* Hero Section */
+        header {
+            background: linear-gradient(135deg, var(--wine) 0%, #3D0909 100%);
+            color: var(--white);
+            padding: 100px 20px;
+            text-align: center;
+        }
+        header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+        header p { font-size: 1.1rem; color: var(--amber); font-weight: 300; }
+
+        /* Section Styling */
+        .section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+        .section-title { 
+            text-align: center; 
+            font-size: 1.8rem; 
+            margin-bottom: 40px; 
+            color: var(--wine);
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .feature-card {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .feature-card h3 { color: var(--wine); margin-bottom: 10px; }
+
+        /* 1. Smart Plans - Simplified & Borderless (Requirement) */
+        .pricing-section { background-color: #F0E6D6; }
+        .pricing-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .price-item {
+            width: 100%;
+            max-width: 500px;
+            background: var(--white);
+            padding: 25px 40px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none; /* Remove border as requested */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .price-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(107, 17, 17, 0.1);
+        }
+        .price-item.selected {
+            background: var(--wine);
+            color: var(--white);
+        }
+        .price-item.selected .plan-info h3,
+        .price-item.selected .plan-price {
+            color: var(--amber);
+        }
+        .price-item.recommend {
+            border-left: 6px solid var(--amber);
+        }
+        .plan-info h3 { font-size: 1.2rem; color: var(--wine); margin-bottom: 4px; }
+        .plan-info p { font-size: 0.85rem; color: var(--text-gray); }
+        .plan-price { font-size: 1.4rem; font-weight: 800; color: var(--wine); }
+
+        /* Chart */
+        .chart-wrap { max-width: 600px; margin: 40px auto 0; padding: 20px; background: #fff; border-radius: 15px; }
+
+        /* Reviews */
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .review-card {
+            background: var(--white); padding: 25px; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .review-card p { font-style: italic; font-size: 0.95rem; margin-bottom: 10px; }
+        .review-card span { font-weight: 700; color: var(--wine); font-size: 0.85rem; }
+
+        /* FAQ */
+        .faq-container { max-width: 700px; margin: 0 auto; }
+        details { background: var(--white); margin-bottom: 10px; border-radius: 10px; }
+        summary { padding: 18px; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; color: var(--wine); }
+        summary::after { content: "+"; color: var(--amber); }
+        details[open] summary::after { content: "-"; }
+        .faq-content { padding: 0 20px 20px; color: var(--text-gray); font-size: 0.95rem; }
+
+        /* CTA */
+        .cta-section { text-align: center; padding: 80px 20px; }
+        .btn-main {
+            padding: 20px 50px; font-size: 1.3rem; font-weight: 800;
+            background: var(--wine); color: var(--white);
+            border-radius: 50px; border: none; cursor: pointer;
+            transition: 0.3s; box-shadow: 0 10px 25px rgba(107, 17, 17, 0.3);
+        }
+        .btn-main:hover { transform: scale(1.05); background: var(--wine-light); }
+
+        @media (max-width: 600px) {
+            .price-item { flex-direction: column; text-align: center; gap: 10px; padding: 20px; }
+            header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#features">특징</a>
+            <a href="#pricing">요금</a>
+            <a href="#reviews">후기</a>
+            <a href="#faq">FAQ</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>혜택온(Hye-Taek On)</h1>
+        <p>매일 아끼는 편의점 구독의 시작</p>
+    </header>
+
+    <section id="features" class="section">
+        <h2 class="section-title">Why 혜택온?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3>☕ Coffee Lover</h3>
+                <p>매일 아침, 부담 없는 가격으로 즐기는 프리미엄 아메리카노.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🍱 Lunch Saver</h3>
+                <p>든든한 도시락과 샌드위치, 학기 중 식비 절약의 끝판왕.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ Ultra Fast</h3>
+                <p>앱 바코드 스캔 한 번으로 3초 만에 끝나는 스마트 결제.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section pricing-section">
+        <h2 class="section-title">Smart Plans</h2>
+        <!-- Requirement 1: Vertical & Simplified & Borderless -->
+        <div class="pricing-list">
+            <div class="price-item" onclick="selectPlan(this)">
+                <div class="plan-info">
+                    <h3>Coffee Plan</h3>
+                    <p>아메리카노 40% 할인</p>
+                </div>
+                <div class="plan-price">₩4,900</div>
+            </div>
+
+            <div class="price-item recommend" onclick="selectPlan(this)">
+                <div class="plan-info">
+                    <h3>Lunch Plan</h3>
+                    <p>도시락·샌드위치 20% 할인</p>
+                </div>
+                <div class="plan-price">₩3,900</div>
+            </div>
+
+            <div class="price-item" onclick="selectPlan(this)">
+                <div class="plan-info">
+                    <h3>All-in-One</h3>
+                    <p>커피 + 도시락 + 추가적립</p>
+                </div>
+                <div class="plan-price">₩7,900</div>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <p style="text-align:center; font-weight:700; margin-bottom:15px; color:var(--wine);">📊 월 20회 이용 시 플랜별 예상 절약액</p>
+            <div id="savingsChart"></div>
+        </div>
+    </section>
+
+    <section id="reviews" class="section">
+        <h2 class="section-title">Real Voices</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <p>"커피 구독 덕분에 한 달 식비가 확 줄었어요!"</p>
+                <span>@student_kim</span>
+            </div>
+            <div class="review-card">
+                <p>"도시락 할인 폭이 커서 정말 만족합니다."</p>
+                <span>@jimin_02</span>
+            </div>
+            <div class="review-card">
+                <p>"앱 사용이 너무 간편해서 좋아요!"</p>
+                <span>@smart_user</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section">
+        <h2 class="section-title">FAQ</h2>
+        <div class="faq-container">
+            <details>
+                <summary>구독 중 언제든 해지할 수 있나요?</summary>
+                <div class="faq-content">네, 앱 내 설정에서 언제든지 자유롭게 해지하실 수 있습니다.</div>
+            </details>
+            <details>
+                <summary>할인 혜택은 어떻게 적용되나요?</summary>
+                <div class="faq-content">앱의 바코드를 편의점 결제 시 제시하시면 자동으로 적용됩니다.</div>
+            </details>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <button class="btn-main" onclick="alert('신청 접수(데모) 안내: 현재는 데모 페이지입니다.')">지금 무료 체험하기</button>
+    </section>
+
+    <script>
+        function selectPlan(element) {
+            document.querySelectorAll('.price-item').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        const data = [{
+            x: ['커피 플랜', '도시락 플랜', '올인원 플랜'],
+            y: [12800, 15600, 28400],
+            type: 'bar',
+            marker: {
+                color: ['#6B1111', '#FFBF00', '#3D0909']
+            }
+        }];
+
+        const layout = {
+            margin: { t: 20, b: 40, l: 50, r: 20 },
+            height: 300,
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { color: '#2D3436' },
+            yaxis: { title: '절약 금액 (원)' }
+        };
+
+        Plotly.newPlot('savingsChart', data, layout, {displayModeBar: false});
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김세범 | Premium Digital Identity</title>
+    <style>
+        /* 
+           Color Palette:
+           Black: #000000
+           Dark Surface: #121212
+           Secondary Surface: #1E1E1E
+           Amber Gold: #FFBF00
+           Text Grey: #A0A0A0
+        */
+        :root {
+            --black: #000000;
+            --surface: #121212;
+            --card: #1E1E1E;
+            --amber: #FFBF00;
+            --text-main: #ffffff;
+            --text-sub: #A0A0A0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--black);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 애니메이션 효과 */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 1. Header Section */
+        header {
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+            text-align: center;
+            padding: 20px;
+        }
+        .profile-circle {
+            width: 110px;
+            height: 110px;
+            background: var(--amber);
+            border-radius: 50%;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 55px;
+            box-shadow: 0 0 30px rgba(255, 191, 0, 0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+        header h1 {
+            font-size: 2.8rem;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        header p {
+            color: var(--amber);
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        /* 2. Main Container */
+        main {
+            max-width: 550px;
+            margin: -60px auto 80px;
+            padding: 0 20px;
+        }
+
+        .section-card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: var(--amber);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h2::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #333;
+        }
+
+        /* 3. Identity & Links */
+        .interest-group { margin-bottom: 15px; }
+        .interest-tag {
+            display: inline-block;
+            background: transparent;
+            color: #ffffff;
+            padding: 6px 18px;
+            border: 1px solid var(--amber);
+            border-radius: 4px;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .link-btns { display: flex; gap: 12px; }
+        .btn {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            border: 1px solid #444;
+            color: var(--text-main);
+        }
+        .btn-amber { background: var(--amber); color: var(--black); font-weight: 700; }
+        .btn:hover { transform: translateY(-3px); filter: brightness(1.2); }
+
+        /* 4. Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .stat-box { background: #262626; padding: 15px; border-radius: 12px; }
+        .stat-num { color: var(--amber); font-size: 1.2rem; font-weight: 700; display: block; }
+        .stat-label { font-size: 0.75rem; color: var(--text-sub); }
+
+        /* 5. Favorites */
+        .hobby-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .hobby-tag { background: #262626; padding: 15px 5px; border-radius: 15px; text-align: center; border: 1px solid #333; }
+        .hobby-tag span { font-size: 1.6rem; display: block; margin-bottom: 5px; }
+        .hobby-tag p { font-size: 0.85rem; font-weight: 500; color: #ccc; }
+
+        /* 6. Vision */
+        .goal-box {
+            background: linear-gradient(145deg, #1a1a1a, #000000);
+            color: var(--amber);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-left: 4px solid var(--amber);
+        }
+
+        /* 7. Luxury Business Card */
+        .card-wrapper { display: flex; justify-content: center; padding-bottom: 100px; }
+        .premium-card {
+            width: 360px; height: 200px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            border-radius: 16px; padding: 30px;
+            position: relative; border: 1px solid #444;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .premium-card::after {
+            content: ""; position: absolute; top: 15px; left: 15px; right: 15px; bottom: 15px;
+            border: 1px solid rgba(255, 191, 0, 0.1); border-radius: 10px;
+        }
+        .card-title { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; z-index: 1; }
+        .card-sub { color: var(--amber); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; z-index: 1; }
+        .card-footer { position: absolute; bottom: 30px; right: 30px; font-size: 0.6rem; color: #444; letter-spacing: 1px; z-index: 1; }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            header h1 { font-size: 2.2rem; }
+            .premium-card { width: 300px; height: 170px; padding: 25px; }
+            .hobby-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="profile-circle">💪</div>
+        <h1>KIM SE BEOM</h1>
+        <p>Management Student</p>
+    </header>
+
+    <main>
+        <!-- Identity & Links -->
+        <section class="section-card" style="animation-delay: 0.2s;">
+            <h2><span style="margin-right:8px">📍</span> Identity</h2>
+            <div class="interest-group">
+                <div class="interest-tag">유통 · 마케팅 · 창업</div>
+            </div>
+            <div class="link-btns">
+                <a href="https://www.instagram.com/" target="_blank" class="btn">📸 Instagram</a>
+                <a href="https://music.youtube.com/" target="_blank" class="btn btn-amber">🎵 YouTube Music</a>
+            </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <section class="section-card" style="animation-delay: 0.4s;">
+            <h2><span style="margin-right:8px">📊</span> Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-box"><span class="stat-num">3rd</span><span class="stat-label">Year</span></div>
+                <div class="stat-box"><span class="stat-num">100+</span><span class="stat-label">Goals</span></div>
+                <div class="stat-box"><span class="stat-num">TOP</span><span class="stat-label">Rank</span></div>
+            </div>
+        </section>
+
+        <!-- Favorites -->
+        <section class="section-card" style="animation-delay: 0.6s;">
+            <h2><span style="margin-right:8px">❤️</span> Favorites</h2>
+            <div class="hobby-grid">
+                <div class="hobby-tag"><span>💪</span><p>헬스</p></div>
+                <div class="hobby-tag"><span>🎣</span><p>낚시</p></div>
+                <div class="hobby-tag"><span>📖</span><p>공부</p></div>
+            </div>
+        </section>
+
+        <!-- Vision -->
+        <section class="section-card" style="animation-delay: 0.8s;">
+            <h2><span style="margin-right:8px">🎯</span> Vision</h2>
+            <div class="goal-box">
+                "행복하고 베풀 수 있는 삶을 살기"
+            </div>
+        </section>
+    </main>
+
+    <!-- Luxury Business Card -->
+    <div class="card-wrapper">
+        <div class="premium-card">
+            <div class="card-title">KIM SE BEOM</div>
+            <div class="card-sub">Marketing Specialist</div>
+            <div class="card-footer">PRIVATE COLLECTION</div>
+        </div>
+    </div>
+
+</body>
+</html>
